@@ -28,6 +28,7 @@
 		<c:if test='${not empty laatstBezocht}'>
 			<p>Je bezocht onze website laatst op ${laatstBezocht}.</p>
 		</c:if>
+		<p>${identificatie.emailAdres}</p>
 	</body>
 </html>
 

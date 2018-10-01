@@ -5,11 +5,14 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 import be.vdab.pizzaluigi.entities.Pizza;
 import be.vdab.pizzaluigi.repositories.PizzaRepository;
 
 @Service
+@Transactional(readOnly=true, isolation=Isolation.READ_COMMITTED)
 class DefaultPizzaService implements PizzaService {
 	private final PizzaRepository pizzaRepository;
 
@@ -18,6 +21,7 @@ class DefaultPizzaService implements PizzaService {
 	}
 
 	@Override
+	@Transactional(readOnly=false, isolation=Isolation.READ_COMMITTED)
 	public void create(Pizza pizza) {
 		pizzaRepository.create(pizza);
 	}
@@ -28,11 +32,13 @@ class DefaultPizzaService implements PizzaService {
 	}
 
 	@Override
+	@Transactional(readOnly=false, isolation=Isolation.READ_COMMITTED)
 	public void update(Pizza pizza) {
 		pizzaRepository.update(pizza);
 	}
 
 	@Override
+	@Transactional(readOnly=false, isolation=Isolation.READ_COMMITTED)
 	public void delete(long id) {
 		pizzaRepository.delete(id);
 	}

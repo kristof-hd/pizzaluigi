@@ -20,6 +20,12 @@ import be.vdab.pizzaluigi.valueobjects.Persoon;
 
 class IndexController1 {
 
+	private final Identificatie identificatie; 
+	
+	IndexController1(Identificatie identificatie) {
+		this.identificatie=identificatie; 
+	}
+	
 	/*@GetMapping
 	ModelAndView index() {
 		String boodschap;
@@ -55,6 +61,9 @@ class IndexController1 {
 		if (laatstBezocht != null) {
 			modelAndView.addObject("laatstBezocht", laatstBezocht);
 		}
+		
+		modelAndView.addObject("identificatie", identificatie); 
+		
 		return modelAndView;
 	}
 	

@@ -2,24 +2,22 @@ package be.vdab.pizzaluigi.restclients;
 
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Scanner;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.Primary;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import be.vdab.pizzaluigi.exceptions.KoersClientException;
 
 @Component 
-@Primary
 class FixerKoersClient implements KoersClient {
 	private static final Logger LOGGER = LoggerFactory.getLogger(FixerKoersClient.class);
 	private final URL url;
 
-	FixerKoersClient() {
+	/*FixerKoersClient() {
 		try {
 			url = new URL("http://data.fixer.io/api/latest?access_key=TikHierJeFreeKey&symbols=USD");
 		} catch (MalformedURLException ex) {
@@ -27,6 +25,10 @@ class FixerKoersClient implements KoersClient {
 			LOGGER.error(fout, ex);
 			throw new KoersClientException(fout);
 		}
+	}*/
+	
+	FixerKoersClient(@Value("${fixerKoersURL}") URL url) {
+		this.url=url; 
 	}
 
 	@Override

@@ -4,7 +4,7 @@
 	<nav>
 		<ul>
 			<li><a href="<c:url value='/'/>">Welkom</a></li>
-			<li><a href="<c:url value='/pizzas'/>">Pizza's</a></li>
+			<li><a href="<c:url value='/pizzas16'/>">Pizza's</a></li>
 			<li><a href="<c:url value='/pizzas13/vantotprijs'/>">Van tot prijs</a></li>
 			<li><a href="<c:url value='/pizzas9/prijzen'/>">Prijzen</a></li>
 			<li><a href="<c:url value='/pizzas15/toevoegen'/>">Toevoegen</a></li>

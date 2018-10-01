@@ -1,6 +1,7 @@
 package be.vdab.pizzaluigi.web;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -24,6 +25,7 @@ class PizzaController15 {
 	private static final String PIZZA_VIEW = "pizza15";
 	private static final String VAN_TOT_PRIJS_VIEW = "vantotprijs";
 	private static final String TOEVOEGEN_VIEW = "toevoegen";
+	private static final String REDIRECT_URL_NA_TOEVOEGEN = "redirect:/pizzas15";
 	private final EuroService2 euroService;
 	private final PizzaService pizzaService;
 
@@ -67,11 +69,20 @@ class PizzaController15 {
 
 	}
 
-	@GetMapping(params = { "van", "tot" })
-	ModelAndView findVanTotPrijs(VanTotPrijsForm form) {
-		return new ModelAndView(VAN_TOT_PRIJS_VIEW, "pizzas",
-				pizzaService.findByPrijsBetween(form.getVan(), form.getTot()));
-	}
+	@GetMapping(params= {"van", "tot"})
+	ModelAndView findVanTotPrijs(@Valid VanTotPrijsForm form, BindingResult bindingResult) {
+		ModelAndView modelAndView = new ModelAndView(VAN_TOT_PRIJS_VIEW); 
+		if (bindingResult.hasErrors()) {
+			return modelAndView; 
+		}
+		List<Pizza> pizzas = pizzaService.findByPrijsBetween(form.getVan(), form.getTot());
+		if (pizzas.isEmpty()) {
+			bindingResult.reject("geenPizzas");
+		} else {
+			modelAndView.addObject("pizzas", pizzas); 
+		}
+		return modelAndView; 
+	}		
 
 	@GetMapping("toevoegen")
 	ModelAndView toevoegen() {
@@ -84,6 +95,7 @@ class PizzaController15 {
 			return new ModelAndView(TOEVOEGEN_VIEW);
 		}
 		pizzaService.create(pizza);
-		return new ModelAndView(PIZZAS_VIEW, "pizzas", pizzaService.findAll());
+		//return new ModelAndView(PIZZAS_VIEW, "pizzas", pizzaService.findAll());
+		return new ModelAndView(REDIRECT_URL_NA_TOEVOEGEN);
 	}
 }
